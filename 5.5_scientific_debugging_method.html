@@ -1,0 +1,147 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Scientific Debugging Techniques Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            font-size: 1.1em;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-left: 3px solid #ccc;
+            overflow-x: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Scientific Debugging Techniques</h1>
+    <p>This tutorial demonstrates how to apply scientific debugging techniques, such as binary search debugging, to identify and resolve multiple logic and runtime errors in a Python program.</p>
+
+    <h2>Python Program with Intentional Errors</h2>
+    <pre><code>
+def calculate_sum_of_squares(numbers):
+    \"\"\"
+    Calculate the sum of squares of the numbers in a list.
+    \"\"\"
+    total = 0
+    for num in numbers:  # Logic Error: List index out of bounds will occur
+        total += num ** 2
+    return total
+
+def divide_sum(total, divisor):
+    \"\"\"
+    Divide the total sum by the divisor.
+    \"\"\"
+    return total / divisor  # Runtime Error: Division by zero if divisor is 0
+
+def main():
+    print("Sum of Squares Calculator")
+    numbers = [1, 2, 3, 4, 5]  # Intentional Error: Add non-numeric values for testing
+    divisor = int(input("Enter a divisor: "))  # Error: What if input is non-numeric?
+
+    total = calculate_sum_of_squares(numbers)  # Logical Error: Doesn't handle empty lists
+    print("Sum of squares:", total)
+
+    result = divide_sum(total, divisor)
+    print("Result after division:", result)
+
+if __name__ == "__main__":
+    main()
+    </code></pre>
+
+    <h2>Debugging Techniques to Apply</h2>
+    <h3>1. Binary Search Debugging</h3>
+    <p>Use the following steps to identify and resolve errors:</p>
+    <ol>
+        <li><strong>Reproduce the Error</strong>:
+            Run the program with different inputs, such as:
+            <ul>
+                <li>A valid divisor: <code>2</code></li>
+                <li>An invalid divisor: <code>0</code></li>
+                <li>A non-numeric input for the divisor: <code>abc</code></li>
+            </ul>
+        </li>
+        <li><strong>Apply Print Statements</strong>:
+            Add print statements to understand the flow of the program and inspect variable values.
+        </li>
+        <li><strong>Narrow Down the Problem (Binary Search)</strong>:
+            Split the program into smaller sections to isolate the problematic part.
+        </li>
+    </ol>
+
+    <h2>Final Debugged Program</h2>
+    <pre><code>
+def calculate_sum_of_squares(numbers):
+    \"\"\"Calculate the sum of squares of the numbers in a list.\"\"\"
+    if not numbers:
+        raise ValueError("The list of numbers is empty.")
+
+    total = 0
+    for num in numbers:
+        if not isinstance(num, (int, float)):
+            raise ValueError(f"Invalid value in list: {num}. List must contain only numbers.")
+        total += num ** 2
+    return total
+
+def divide_sum(total, divisor):
+    \"\"\"Divide the total sum by the divisor.\"\"\"
+    if divisor == 0:
+        raise ZeroDivisionError("Division by zero is not allowed.")
+    return total / divisor
+
+def main():
+    \"\"\"Main function to calculate the sum of squares and divide it by a user-provided divisor.\"\"\"
+    print("Sum of Squares Calculator")
+    numbers = [1, 2, 3, 4, 5]  # Ensure the list contains valid numeric values
+
+    try:
+        divisor = int(input("Enter a divisor: "))  # Input validation for the divisor
+        total = calculate_sum_of_squares(numbers)
+        print("Sum of squares:", total)
+
+        result = divide_sum(total, divisor)
+        print("Result after division:", result)
+
+    except ValueError as ve:
+        print(f"Value Error: {ve}")
+    except ZeroDivisionError as zde:
+        print(f"Zero Division Error: {zde}")
+    except Exception as e:
+        print(f"An unexpected error occurred: {e}")
+
+if __name__ == "__main__":
+    main()
+    </code></pre>
+
+    <h2>Example Runs</h2>
+    <h3>Input:</h3>
+    <pre><code>Enter a divisor: 2</code></pre>
+    <h3>Output:</h3>
+    <pre><code>Sum of squares: 55
+Result after division: 27.5</code></pre>
+
+    <h3>Input:</h3>
+    <pre><code>Enter a divisor: 0</code></pre>
+    <h3>Output:</h3>
+    <pre><code>Zero Division Error: Division by zero is not allowed.</code></pre>
+
+    <h3>Input:</h3>
+    <pre><code>Enter a divisor: abc</code></pre>
+    <h3>Output:</h3>
+    <pre><code>Value Error: invalid literal for int() with base 10: 'abc'</code></pre>
+</body>
+</html>

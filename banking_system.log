@@ -1,0 +1,17 @@
+2025-01-04 16:43:09,398 - INFO - Banking System started.
+2025-01-04 16:43:09,436 - INFO - BankSystem initialized with predefined accounts.
+2025-01-04 16:43:16,212 - DEBUG - Attempting withdrawal: Account=123456, Amount=2000.00
+2025-01-04 16:43:16,212 - ERROR - Invalid account number: 123456
+2025-01-04 16:43:16,212 - WARNING - Handled InvalidAccountNumberException: Account number 123456 is invalid.
+2025-01-04 16:43:21,160 - INFO - Banking System terminated by the user.
+2025-04-05 12:43:53,794 - INFO - Banking System started.
+2025-04-05 12:43:53,794 - INFO - BankSystem initialized with predefined accounts.
+2025-04-05 12:43:59,040 - DEBUG - Attempting withdrawal: Account=123, Amount=1222.00
+2025-04-05 12:43:59,040 - ERROR - Invalid account number: 123
+2025-04-05 12:43:59,040 - WARNING - Handled InvalidAccountNumberException: Account number 123 is invalid.
+2025-04-05 12:44:12,336 - DEBUG - Attempting withdrawal: Account=12345, Amount=6000.00
+2025-04-05 12:44:12,337 - ERROR - Insufficient funds for account: 12345, Requested: 6000.00, Available: 5000.00
+2025-04-05 12:44:12,337 - WARNING - Handled InsufficientFundsException: Insufficient funds in the account.
+2025-04-05 12:44:23,488 - DEBUG - Attempting withdrawal: Account=12345, Amount=4000.00
+2025-04-05 12:44:23,488 - INFO - Withdrawal successful: Account=12345, Withdrawn=4000.00, Remaining=1000.00
+2025-04-05 12:44:28,304 - INFO - Banking System terminated by the user.

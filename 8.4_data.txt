@@ -1,0 +1,12 @@
+John Doe
+Email: john.doe@example.com
+Phone: (123) 456-7890
+Date of Birth: 01/15/1990
+
+Jane Smith
+Email: jane.smith@company.org
+Phone: 987-654-3210
+Appointment Date: 02/25/2024
+
+Support Email: support@website.com
+Emergency Contact: +1 800-555-0199

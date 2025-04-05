@@ -1,0 +1,148 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Python Debugging Tutorial</title>
+    <style>
+        body {
+            font-family: Arial, sans-serif;
+            line-height: 1.6;
+            margin: 20px;
+        }
+        code {
+            background-color: #f4f4f4;
+            padding: 2px 4px;
+            font-size: 1.1em;
+            color: #c7254e;
+        }
+        pre {
+            background-color: #f4f4f4;
+            padding: 10px;
+            border-left: 3px solid #ccc;
+            overflow-x: auto;
+        }
+        h1, h2, h3 {
+            color: #333;
+        }
+    </style>
+</head>
+<body>
+    <h1>Python Debugging Tutorial</h1>
+    <p>This tutorial demonstrates the use of Python's built-in debugger (<code>pdb</code>) with a sample program containing intentional errors. This guide will help you set breakpoints, step through code, and examine variable values.</p>
+
+    <h2>Sample Program with Intentional Errors</h2>
+    <pre><code>
+def calculate_average(numbers):
+    \"\"\"
+    Calculate the average of a list of numbers.
+    \"\"\"
+    total = 0
+    count = len(numbers)  # Intentional error: What if numbers is an empty list?
+    for num in numbers:
+        total += num
+    average = total / count  # Potential division by zero error
+    return average
+
+def main():
+    \"\"\"
+    Main function to demonstrate the program.
+    \"\"\"
+    sample_data = [10, 20, 30, 40, 50]  # Try using an empty list here to trigger an error
+    print("Sample Data:", sample_data)
+    result = calculate_average(sample_data)  # Incorrect handling of empty data
+    print("Average:", result)
+
+if __name__ == "__main__":
+    main()
+    </code></pre>
+
+    <h2>Steps to Debug Using <code>pdb</code></h2>
+    <h3>1. Add a Breakpoint</h3>
+    <p>Add the following line in the program where you want to start debugging:</p>
+    <pre><code>import pdb; pdb.set_trace()</code></pre>
+
+    <p>For example, add this line before the loop in the <code>calculate_average</code> function:</p>
+    <pre><code>
+def calculate_average(numbers):
+    import pdb; pdb.set_trace()  # Start debugging here
+    total = 0
+    count = len(numbers)
+    for num in numbers:
+        total += num
+    average = total / count
+    return average
+    </code></pre>
+
+    <h3>2. Run the Program with <code>pdb</code></h3>
+    <p>Run the program in the terminal:</p>
+    <pre><code>python script_name.py</code></pre>
+
+    <h3>3. Debugging Commands</h3>
+    <ul>
+        <li><code>l</code> (list): View the code around the current line.</li>
+        <li><code>n</code> (next): Execute the current line and move to the next.</li>
+        <li><code>c</code> (continue): Continue execution until the next breakpoint.</li>
+        <li><code>s</code> (step): Step into a function call.</li>
+        <li><code>p</code> (print): Print the value of a variable or expression, e.g., <code>p numbers</code>.</li>
+        <li><code>q</code> (quit): Exit the debugger.</li>
+    </ul>
+
+    <h3>4. Debugging Example</h3>
+    <p>When the program is run with the <code>pdb</code> breakpoint:</p>
+    <pre><code>
+&gt; script_name.py(5)calculate_average()
+-> total = 0
+(Pdb) l
+  1   def calculate_average(numbers):
+  2       \"\"\"Calculate the average of a list of numbers.\"\"\"
+  3       total = 0
+  4       count = len(numbers)
+  5  ->    total = 0
+  6       for num in numbers:
+  7           total += num
+  8       average = total / count
+  9       return average
+  </code></pre>
+
+    <p>Inspect the <code>numbers</code> variable:</p>
+    <pre><code>(Pdb) p numbers
+[10, 20, 30, 40, 50]</code></pre>
+
+    <h2>Using Debugging in an IDE</h2>
+    <p>If you’re using an IDE like PyCharm:</p>
+    <ol>
+        <li>Set a breakpoint by clicking on the gutter (left margin) next to the line.</li>
+        <li>Run in Debug Mode by clicking the green "Debug" button.</li>
+        <li>Step through code and examine variables in the debugger window.</li>
+    </ol>
+
+    <h2>Final Debugged Program</h2>
+    <pre><code>
+def calculate_average(numbers):
+    \"\"\"Calculate the average of a list of numbers.\"\"\"
+    if not numbers:
+        raise ValueError("The list is empty. Cannot calculate the average.")
+    total = 0
+    count = len(numbers)
+    for num in numbers:
+        total += num
+    average = total / count
+    return average
+
+def main():
+    \"\"\"Main function to demonstrate the program.\"\"\"
+    sample_data = []  # Use an empty list to test error handling
+    try:
+        print("Sample Data:", sample_data)
+        result = calculate_average(sample_data)
+        print("Average:", result)
+    except ValueError as e:
+        print("Error:", e)
+
+if __name__ == "__main__":
+    main()
+    </code></pre>
+
+</body>
+</html>
